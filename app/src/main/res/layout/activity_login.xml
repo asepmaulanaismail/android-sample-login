@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginBottom="16dp"
-            tools:srcCompat="@drawable/ic_android_primary" />
+            android:src="@drawable/ic_android_primary" />
 
         <EditText
             android:id="@+id/input_email"
