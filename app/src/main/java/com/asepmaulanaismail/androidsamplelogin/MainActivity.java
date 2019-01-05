@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.asepmaulanaismail.androidsamplelogin.core.StaticValues;
 import com.asepmaulanaismail.androidsamplelogin.preferences.Session;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                session.signOut();
+                session.putBoolean(StaticValues.KEY_IS_LOGGED_IN, false);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

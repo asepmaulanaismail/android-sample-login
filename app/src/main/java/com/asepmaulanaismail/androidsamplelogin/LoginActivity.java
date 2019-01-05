@@ -11,7 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.asepmaulanaismail.androidsamplelogin.core.StaticValues;
 import com.asepmaulanaismail.androidsamplelogin.preferences.Session;
+
+import java.nio.charset.Charset;
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     Session session;
@@ -55,13 +59,14 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                boolean isLoginSuccess = session.checkCredentials(strEmail, strPassword);
+                boolean isLoginSuccess = true;
                 if (isLoginSuccess){
                     // TODO: remove this delay if you have requested credentials to API
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            session.putBoolean(StaticValues.KEY_IS_LOGGED_IN, true);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
@@ -75,6 +80,36 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    public void performLogin(String nrp, String password){
+        HashMap<String, String> requestParams = new HashMap<>();
+        requestParams.put("Nrp", nrp);
+        requestParams.put("Password", password);
+
+        // TODO: add jwt
+//        String jsonString = new Gson().toJson(requestParams);
+//        Fuel.post("/api/auth/login").body(jsonString, Charset.forName("UTF-8")).responseString(new com.github.kittinunf.fuel.core.Handler<String>() {
+//            @Override
+//            public void success(@NotNull Request request, @NotNull Response response, String s) {
+//                GeneralResponse gresponse = getGeneralResponse(response);
+//                String token = gresponse.getToken();
+//                JWT jwt = new JWT(token);
+//                session.putString(StaticValues.KEY_TOKEN, token);
+//                session.putBoolean(StaticValues.KEY_IS_LOGGED_IN, true);
+//                session.putString(StaticValues.KEY_USERNAME, jwt.getClaim(StaticValues.KEY_USERNAME).asString());
+//                session.putString(StaticValues.KEY_ROLE, jwt.getClaim(StaticValues.KEY_ROLE).asString());
+//                openDashboard();
+//            }
+//
+//            @Override
+//            public void failure(@NotNull Request request, @NotNull Response response, @NotNull FuelError fuelError) {
+//                GeneralResponse gresponse = getGeneralResponse(response);
+//                toastShort(gresponse.getMessage());
+//                showProgress(false);
+//            }
+//        });
     }
 
     public void setLoading(Boolean value){

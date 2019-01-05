@@ -5,39 +5,40 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 
-public class Session {
-    private Activity activity;
-    private SharedPreferences sharedPref;
-    private String prefName = "com.asepmaulanaismail.androidsamplelogin.a89u39da8921";
-    private final String KEY_IS_LOGGED_IN = "isLoggedIn";
+import com.asepmaulanaismail.androidsamplelogin.core.StaticValues;
+
+import java.util.HashMap;
+
+public class Session{
+    private Context context;
+    private SharedPreferences prefs;
+
+    public Session(){
+
+    }
 
     public Session(Activity activity){
-        this.activity = activity;
-        sharedPref = this.activity.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        context = activity;
+        prefs = this.context.getSharedPreferences(StaticValues.prefKey, Context.MODE_PRIVATE);
+//        FuelManager.Companion.getInstance().setBasePath(StaticValues.basePath);
+//        HashMap<String, String> headers = new HashMap<>();
+//        headers.put("Content-Type", "application/json");
+//        FuelManager.Companion.getInstance().setBaseHeaders(headers);
     }
 
-    public boolean isLoggedIn(){
-        return sharedPref.getBoolean(KEY_IS_LOGGED_IN, false);
+    public void putString(String key, String value){
+        prefs.edit().putString(key, value).commit();
     }
 
-    public void setSessionString(String name, String value){
-        sharedPref.edit().putString(name, value);
-        sharedPref.edit().commit();
+    public String getString(String key){
+        return prefs.getString(key, "");
     }
 
-    public void setSessionBoolean(String name, Boolean value){
-        sharedPref.edit().putBoolean(name, value);
-        sharedPref.edit().commit();
+    public void putBoolean(String key, Boolean value){
+        prefs.edit().putBoolean(key, value).commit();
     }
 
-    public void signOut(){
-        sharedPref.edit().clear().commit();
-    }
-
-    public boolean checkCredentials(final String email, final String password){
-        // TODO: Change this code to ajax request for login
-        setSessionString("USR_EMAIL", email);
-        setSessionBoolean(KEY_IS_LOGGED_IN, true);
-        return true;
+    public Boolean getBoolean(String key){
+        return prefs.getBoolean(key, false);
     }
 }

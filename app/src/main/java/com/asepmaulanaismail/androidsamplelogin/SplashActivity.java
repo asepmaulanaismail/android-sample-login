@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.asepmaulanaismail.androidsamplelogin.core.StaticValues;
 import com.asepmaulanaismail.androidsamplelogin.preferences.Session;
 
 public class SplashActivity extends AppCompatActivity {
@@ -23,7 +24,8 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (session.isLoggedIn()){
+                Boolean isLoggedIn = session.getBoolean(StaticValues.KEY_IS_LOGGED_IN);
+                if (isLoggedIn){
                     Intent intent = new Intent(context, MainActivity.class);
                     startActivity(intent);
                     finish();
